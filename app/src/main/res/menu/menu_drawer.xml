@@ -2,12 +2,12 @@
     <group android:checkableBehavior="single">
         <item android:id="@+id/menu_drawer_home"
             android:checked="true"
-            android:title="Home"/>
+            android:title="@string/fragment_title_home"/>
         <item android:id="@+id/menu_drawer_recycler_list"
             android:icon="@android:drawable/star_off"
-            android:title="recycler list"/>
+            android:title="@string/fragment_title_list"/>
         <item android:id="@+id/menu_drawer_recycler_grid"
             android:icon="@android:drawable/star_off"
-            android:title="Recycler grid"/>
+            android:title="@string/fragment_title_grid"/>
     </group>
 </menu>

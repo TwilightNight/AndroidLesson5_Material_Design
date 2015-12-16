@@ -2,4 +2,7 @@
     <string name="app_name">Lesson5_Material_Design</string>
     <string name="drawer_open">drawer_open</string>
     <string name="drawer_close">drawer_close</string>
+    <string name="fragment_title_home">Home page</string>
+    <string name="fragment_title_list">Recycler list</string>
+    <string name="fragment_title_grid">Recycler Grid</string>
 </resources>
