@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="cat_array">
+        <item>@drawable/cat01</item>
+        <item>@drawable/cat02</item>
+        <item>@drawable/cat03</item>
+        <item>@drawable/cat04</item>
+        <item>@drawable/cat05</item>
+        <item>@drawable/cat08</item>
+        <item>@drawable/cat10</item>
+        <item>@drawable/cat11</item>
+        <item>@drawable/cat12</item>
+        <item>@drawable/cat13</item>
+        <item>@drawable/cat14</item>
+        <item>@drawable/cat15</item>
+        <item>@drawable/cat16</item>
+        <item>@drawable/cat17</item>
+        <item>@drawable/cat18</item>
+        <item>@drawable/cat19</item>
+    </integer-array>
+</resources>

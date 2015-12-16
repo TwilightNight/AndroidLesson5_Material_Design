@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/menu_drawer_home"
+            android:checked="true"
+            android:title="Home"/>
+        <item android:id="@+id/menu_drawer_recycler_list"
+            android:icon="@android:drawable/star_off"
+            android:title="recycler list"/>
+        <item android:id="@+id/menu_drawer_recycler_grid"
+            android:icon="@android:drawable/star_off"
+            android:title="Recycler grid"/>
+    </group>
+</menu>
