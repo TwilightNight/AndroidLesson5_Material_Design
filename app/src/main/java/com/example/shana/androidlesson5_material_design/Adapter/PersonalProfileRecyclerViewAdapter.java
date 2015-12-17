@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,6 +26,7 @@ public class PersonalProfileRecyclerViewAdapter extends RecyclerView.Adapter {
     private ArrayList<PersonalProfile> profileList;
     private int orientation;
     private OnViewClickListener listener;
+
     public PersonalProfileRecyclerViewAdapter(ArrayList<PersonalProfile> profileList, int orientation, OnViewClickListener listener) {
         this.orientation = orientation;
         this.profileList = profileList;
@@ -36,7 +38,7 @@ public class PersonalProfileRecyclerViewAdapter extends RecyclerView.Adapter {
         Context context = parent.getContext();
         View contactView = LayoutInflater.from(context).inflate(R.layout.adapter_personal_profile, parent, false);
         ViewHolder viewHolder = new ViewHolder(contactView, listener);
-        LinearLayout linearLayout = (LinearLayout)contactView.findViewById(R.id.adapter_personal_profile_linear_layout);
+        LinearLayout linearLayout = (LinearLayout) contactView.findViewById(R.id.adapter_personal_profile_linear_layout);
         linearLayout.setOrientation(orientation);
         return viewHolder;
     }
@@ -75,13 +77,13 @@ public class PersonalProfileRecyclerViewAdapter extends RecyclerView.Adapter {
                 public boolean onTouch(View v, MotionEvent event) {
                     switch (event.getAction()) {
                         case MotionEvent.ACTION_DOWN:
-                            selectedView.setAlpha(0.5f);
+                            showSelection();
                             break;
                         case MotionEvent.ACTION_CANCEL:
-                            selectedView.setAlpha(0);
+                            hideSelection();
                             break;
                         case MotionEvent.ACTION_UP:
-                            selectedView.setAlpha(0);
+                            hideSelection();
                             listener.onClickAt(getAdapterPosition());
                             break;
                     }
@@ -89,6 +91,21 @@ public class PersonalProfileRecyclerViewAdapter extends RecyclerView.Adapter {
                 }
             });
         }
+
+        private void showSelection() {
+            selectionAnimation(0, .5f);
+        }
+
+        private void hideSelection() {
+            selectionAnimation(.5f, 0);
+        }
+
+        private void selectionAnimation(float begin, float end) {
+            selectedView.setAlpha(end);
+            selectedView.startAnimation(new AlphaAnimation(begin, end));
+
+        }
+
 
         public void layoutWithPersonalProfile(PersonalProfile personalProfile) {
             nameText.setText("Name: " + personalProfile.getName());
