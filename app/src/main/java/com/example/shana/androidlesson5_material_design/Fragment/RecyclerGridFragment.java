@@ -1,29 +1,19 @@
 package com.example.shana.androidlesson5_material_design.Fragment;
 
-import android.app.Fragment;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.example.shana.androidlesson5_material_design.R;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import android.widget.LinearLayout;
 
 /**
  * Created by shana on 2015/12/16.
  */
-public class RecyclerGridFragment extends Fragment {
-    @Bind(R.id.fragment_recycler_recycler_view)
-    RecyclerView recyclerView;
-    @Nullable
+public class RecyclerGridFragment extends RecyclerViewFragment {
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_recycler, container, false);
-        ButterKnife.bind(this, view);
-        return view;
+    protected int getLayoutOrientation() {
+        return LinearLayout.VERTICAL;
+    }
+
+    protected RecyclerView.LayoutManager getLayoutManager() {
+        return new GridLayoutManager(getActivity(), 2);
     }
 }

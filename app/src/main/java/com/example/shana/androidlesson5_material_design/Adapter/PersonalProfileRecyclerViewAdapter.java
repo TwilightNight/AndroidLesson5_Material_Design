@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.shana.androidlesson5_material_design.Model.PersonalProfile;
@@ -21,7 +22,7 @@ import butterknife.ButterKnife;
  */
 public class PersonalProfileRecyclerViewAdapter extends RecyclerView.Adapter {
     private ArrayList<PersonalProfile> profileList;
-
+    private int orientation;
     class ViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.adapter_personal_data_name)
         TextView nameText;
@@ -43,15 +44,18 @@ public class PersonalProfileRecyclerViewAdapter extends RecyclerView.Adapter {
         }
     }
 
-    public PersonalProfileRecyclerViewAdapter(ArrayList<PersonalProfile> profileList) {
+    public PersonalProfileRecyclerViewAdapter(ArrayList<PersonalProfile> profileList, int orientation) {
+        this.orientation = orientation;
         this.profileList = profileList;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
-        View contactView = LayoutInflater.from(context).inflate(R.layout.adapter_personal_profile_list, parent, false);
+        View contactView = LayoutInflater.from(context).inflate(R.layout.adapter_personal_profile, parent, false);
         ViewHolder viewHolder = new ViewHolder(contactView);
+        LinearLayout linearLayout = (LinearLayout)contactView.findViewById(R.id.adapter_personal_profile_linear_layout);
+        linearLayout.setOrientation(orientation);
         return viewHolder;
     }
 

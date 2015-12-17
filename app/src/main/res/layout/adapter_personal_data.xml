@@ -9,11 +9,13 @@
     <TextView
         android:id="@+id/adapter_personal_data_name"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_marginBottom="@dimen/default_padding"/>
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/default_padding"
+        android:textSize="@dimen/recycler_view_font_size" />
 
     <TextView
         android:id="@+id/adapter_personal_data_age"
         android:layout_width="match_parent"
-        android:layout_height="20dp" />
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/recycler_view_font_size"/>
 </LinearLayout>
