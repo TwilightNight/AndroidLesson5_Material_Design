@@ -12,6 +12,7 @@ import java.io.InputStream;
 public class LocalDataRequest implements DataRequest {
     String fileName;
     Context context;
+
     public LocalDataRequest(Context context, String location) {
         this.context = context;
         this.fileName = location;
@@ -27,13 +28,13 @@ public class LocalDataRequest implements DataRequest {
     }
 
     private InputStream getStreamAtLocation() {
-        delayTime(2000);
+        delayTime(1);
         return context.getResources().openRawResource(context.getResources().getIdentifier(fileName, "raw", context.getPackageName()));
     }
 
-    private void delayTime(int delayTime) {
+    private void delayTime(int delaySecond) {
         try {
-            Thread.sleep(delayTime);
+            Thread.sleep(delaySecond * 1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/adapter_personal_profile_linear_layout"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-    <include layout="@layout/adapter_profile_picture" />
+    android:layout_height="match_parent">
 
-    <include layout="@layout/adapter_personal_data" />
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/adapter_personal_profile_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/adapter_profile_picture" />
+
+        <include layout="@layout/adapter_personal_data" />
+    </LinearLayout>
+
+
+    <View
+        android:id="@+id/adapter_personal_profile_selected_view"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@android:color/darker_gray"
+        android:alpha="0"/>
+</RelativeLayout>

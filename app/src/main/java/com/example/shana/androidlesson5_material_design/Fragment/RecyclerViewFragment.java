@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.shana.androidlesson5_material_design.Adapter.PersonalProfileRecyclerViewAdapter;
 import com.example.shana.androidlesson5_material_design.Model.PersonalProfile;
@@ -46,7 +47,12 @@ public abstract class RecyclerViewFragment extends Fragment {
             public void onFinish(String result) {
                 progressDialog.dismiss();
                 ArrayList<PersonalProfile> list = new Gson().fromJson(result, new TypeToken<ArrayList<PersonalProfile>>(){}.getType());
-                recyclerView.setAdapter(new PersonalProfileRecyclerViewAdapter(list, getLayoutOrientation()));
+                recyclerView.setAdapter(new PersonalProfileRecyclerViewAdapter(list, getLayoutOrientation(), new PersonalProfileRecyclerViewAdapter.OnViewClickListener() {
+                    @Override
+                    public void onClickAt(int position) {
+                        Toast.makeText(getActivity(), "On " + position + " item click",Toast.LENGTH_SHORT).show();
+                    }
+                }));
                 recyclerView.getAdapter().notifyDataSetChanged();
                 recyclerView.setLayoutManager(getLayoutManager());
             }
