@@ -4,11 +4,11 @@ import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.shana.androidlesson5_material_design.Adapter.PersonalProfileRecyclerViewAdapter;
 import com.example.shana.androidlesson5_material_design.Model.PersonalProfile;
@@ -50,7 +50,7 @@ public abstract class RecyclerViewFragment extends Fragment {
                 recyclerView.setAdapter(new PersonalProfileRecyclerViewAdapter(list, getLayoutOrientation(), new PersonalProfileRecyclerViewAdapter.OnViewClickListener() {
                     @Override
                     public void onClickAt(int position) {
-                        Toast.makeText(getActivity(), "On " + position + " item click",Toast.LENGTH_SHORT).show();
+                        Snackbar.make(getView(), "On " + position + " item click", Snackbar.LENGTH_SHORT).show();
                     }
                 }));
                 recyclerView.getAdapter().notifyDataSetChanged();

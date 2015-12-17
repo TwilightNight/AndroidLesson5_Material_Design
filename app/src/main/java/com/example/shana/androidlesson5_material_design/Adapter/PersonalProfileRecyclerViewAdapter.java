@@ -73,7 +73,6 @@ public class PersonalProfileRecyclerViewAdapter extends RecyclerView.Adapter {
             itemView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
-                    System.out.println(event.getAction());
                     switch (event.getAction()) {
                         case MotionEvent.ACTION_DOWN:
                             selectedView.setAlpha(0.5f);
