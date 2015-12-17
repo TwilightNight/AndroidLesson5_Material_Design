@@ -3,15 +3,19 @@ package com.example.shana.androidlesson5_material_design.Fragment;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.shana.androidlesson5_material_design.Adapter.PersonalProfileRecyclerViewAdapter;
 import com.example.shana.androidlesson5_material_design.Model.PersonalProfile;
 import com.example.shana.androidlesson5_material_design.R;
 import com.example.shana.androidlesson5_material_design.Utils.DataDownloader;
 import com.example.shana.androidlesson5_material_design.Utils.LocalDataRequest;
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
 
 import junit.framework.Assert;
 
@@ -36,10 +40,13 @@ public class RecyclerListFragment extends Fragment {
     }
 
     private void loadData() {
-        new DataDownloader<ArrayList<PersonalProfile>>(new DataDownloader.OnDataDownloadFinishListener<ArrayList<PersonalProfile>>() {
+        new DataDownloader(new DataDownloader.OnDataDownloadFinishListener() {
             @Override
-            public void onFinish(ArrayList<PersonalProfile> result) {
-                Assert.assertTrue(true);
+            public void onFinish(String result) {
+                ArrayList<PersonalProfile> list = new Gson().fromJson(result, new TypeToken<ArrayList<PersonalProfile>>(){}.getType());
+                recyclerView.setAdapter(new PersonalProfileRecyclerViewAdapter(list));
+                recyclerView.getAdapter().notifyDataSetChanged();
+                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             }
 
             @Override

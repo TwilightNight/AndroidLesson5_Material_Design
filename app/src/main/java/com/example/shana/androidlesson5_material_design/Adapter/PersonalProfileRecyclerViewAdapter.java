@@ -21,15 +21,30 @@ import butterknife.ButterKnife;
  */
 public class PersonalProfileRecyclerViewAdapter extends RecyclerView.Adapter {
     private ArrayList<PersonalProfile> profileList;
-    class ViewHolder extends RecyclerView.ViewHolder{
-        @Bind(R.id.adapter_personal_data_name) TextView nameText;
-        @Bind(R.id.adapter_personal_data_age) TextView ageText;
-        @Bind(R.id.adapter_profile_picture_image_view) ImageView photoImageView;
+
+    class ViewHolder extends RecyclerView.ViewHolder {
+        @Bind(R.id.adapter_personal_data_name)
+        TextView nameText;
+        @Bind(R.id.adapter_personal_data_age)
+        TextView ageText;
+        @Bind(R.id.adapter_profile_picture_image_view)
+        ImageView photoImageView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+
+        public void layoutWithPersonalProfile(PersonalProfile personalProfile) {
+            nameText.setText("Name: " + personalProfile.getName());
+            ageText.setText("Age: " + personalProfile.getAge());
+            Context context = photoImageView.getContext();
+            photoImageView.setImageResource(context.getResources().getIdentifier(personalProfile.getPhoto(), "drawable", context.getPackageName()));
+        }
+    }
+
+    public PersonalProfileRecyclerViewAdapter(ArrayList<PersonalProfile> profileList) {
+        this.profileList = profileList;
     }
 
     @Override
@@ -42,7 +57,7 @@ public class PersonalProfileRecyclerViewAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
+        ((ViewHolder) holder).layoutWithPersonalProfile(profileList.get(position));
     }
 
     @Override

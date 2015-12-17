@@ -1,12 +1,107 @@
 [
   {
-    "name":"Winnie",
-    "age":3,
-    "photo":"@drawable/cat01"
+    "name": "Sonia",
+    "age": 4,
+    "photo": "cat_q1"
   },
   {
-    "name":"Phoebe",
-    "age":4,
-    "photo":"@drawable/cat02"
+    "name": "Terri",
+    "age": 2,
+    "photo": "cat_q2"
+  },
+  {
+    "name": "Ocean",
+    "age": 6,
+    "photo": "cat_q3"
+  },
+  {
+    "name": "Riley",
+    "age": 7,
+    "photo": "cat_q4"
+  },
+  {
+    "name": "Moxie",
+    "age": 5,
+    "photo": "cat_q5"
+  },
+  {
+    "name": "Zora",
+    "age": 9,
+    "photo": "cat01"
+  },
+  {
+    "name": "Valery",
+    "age": 7,
+    "photo": "cat02"
+  },
+  {
+    "name": "Neve",
+    "age": 12,
+    "photo": "cat03"
+  },
+  {
+    "name": "Liana",
+    "age": 3,
+    "photo": "cat04"
+  },
+  {
+    "name": "Jasmin",
+    "age": 1,
+    "photo": "cat05"
+  },
+  {
+    "name": "Lia",
+    "age": 13,
+    "photo": "cat08"
+  },
+  {
+    "name": "Carlie",
+    "age": 8,
+    "photo": "cat10"
+  },
+  {
+    "name": "Becky",
+    "age": 6,
+    "photo": "cat11"
+  },
+  {
+    "name": "Aura",
+    "age": 11,
+    "photo": "cat12"
+  },
+  {
+    "name": "Dayle",
+    "age": 9,
+    "photo": "cat13"
+  },
+  {
+    "name": "Cleo",
+    "age": 4,
+    "photo": "cat14"
+  },
+  {
+    "name": "Indie",
+    "age": 3,
+    "photo": "cat15"
+  },
+  {
+    "name": "Frida",
+    "age": 7,
+    "photo": "cat16"
+  },
+  {
+    "name": "Gilda",
+    "age": 4,
+    "photo": "cat17"
+  },
+  {
+    "name": "Shannon",
+    "age": 4,
+    "photo": "cat18"
+  },
+  {
+    "name": "Ora",
+    "age": 4,
+    "photo": "cat19"
   }
 ]

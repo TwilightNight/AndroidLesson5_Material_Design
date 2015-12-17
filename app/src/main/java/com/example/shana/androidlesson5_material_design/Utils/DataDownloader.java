@@ -3,22 +3,20 @@ package com.example.shana.androidlesson5_material_design.Utils;
 import android.os.AsyncTask;
 
 import com.google.common.base.Optional;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 /**
  * Created by shana on 2015/12/16.
  */
 
-public class DataDownloader<T> {
+public class DataDownloader {
     private OnDataDownloadFinishListener listener;
 
     public DataDownloader(OnDataDownloadFinishListener listener) {
         this.listener = listener;
     }
 
-    public interface OnDataDownloadFinishListener<IT> {
-        void onFinish(IT result);
+    public interface OnDataDownloadFinishListener {
+        void onFinish(String result);
 
         void onFailed(String errorMessage);
     }
@@ -37,7 +35,7 @@ public class DataDownloader<T> {
         protected void onPostExecute(Optional<String> result) {
             if (result.isPresent()) {
                 try {
-                    listener.onFinish(new Gson().fromJson(result.get(), new TypeToken<T>() {}.getType()));
+                    listener.onFinish(result.get());
                 } catch (Exception e) {
                     listener.onFailed(e.getMessage());
                 }
