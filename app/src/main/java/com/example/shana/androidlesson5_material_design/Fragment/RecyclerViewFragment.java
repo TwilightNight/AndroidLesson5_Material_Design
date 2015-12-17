@@ -1,6 +1,7 @@
 package com.example.shana.androidlesson5_material_design.Fragment;
 
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -39,9 +40,11 @@ public abstract class RecyclerViewFragment extends Fragment {
     }
 
     private void loadData() {
+        final ProgressDialog progressDialog = ProgressDialog.show(getActivity(), getResources().getString(R.string.progressing), getResources().getString(R.string.progressing_hint));
         new DataDownloader(new DataDownloader.OnDataDownloadFinishListener() {
             @Override
             public void onFinish(String result) {
+                progressDialog.dismiss();
                 ArrayList<PersonalProfile> list = new Gson().fromJson(result, new TypeToken<ArrayList<PersonalProfile>>(){}.getType());
                 recyclerView.setAdapter(new PersonalProfileRecyclerViewAdapter(list, getLayoutOrientation()));
                 recyclerView.getAdapter().notifyDataSetChanged();
@@ -50,6 +53,7 @@ public abstract class RecyclerViewFragment extends Fragment {
 
             @Override
             public void onFailed(String errorMessage) {
+                progressDialog.dismiss();
                 System.out.println(errorMessage);
                 Assert.assertTrue(false);
             }

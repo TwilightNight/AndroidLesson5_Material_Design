@@ -5,4 +5,6 @@
     <string name="fragment_title_home">Home page</string>
     <string name="fragment_title_list">Recycler list</string>
     <string name="fragment_title_grid">Recycler Grid</string>
+    <string name="progressing">Progressing...</string>
+    <string name="progressing_hint">Please wait until finish...</string>
 </resources>

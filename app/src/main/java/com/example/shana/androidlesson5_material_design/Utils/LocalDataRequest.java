@@ -27,7 +27,16 @@ public class LocalDataRequest implements DataRequest {
     }
 
     private InputStream getStreamAtLocation() {
+        delayTime(2000);
         return context.getResources().openRawResource(context.getResources().getIdentifier(fileName, "raw", context.getPackageName()));
+    }
+
+    private void delayTime(int delayTime) {
+        try {
+            Thread.sleep(delayTime);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private String convertStreamToString(InputStream inputStream) {
