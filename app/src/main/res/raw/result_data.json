@@ -1,0 +1,12 @@
+[
+  {
+    "name":"Winnie",
+    "age":3,
+    "photo":"@drawable/cat01"
+  },
+  {
+    "name":"Phoebe",
+    "age":4,
+    "photo":"@drawable/cat02"
+  }
+]

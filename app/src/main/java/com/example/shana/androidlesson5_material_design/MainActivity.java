@@ -9,6 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.example.shana.androidlesson5_material_design.Fragment.HomeFragment;
+import com.example.shana.androidlesson5_material_design.Fragment.RecyclerGridFragment;
+import com.example.shana.androidlesson5_material_design.Fragment.RecyclerListFragment;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -87,6 +91,12 @@ public class MainActivity extends AppCompatActivity {
         switch (selectedMenuItemPosition) {
             case 0:
                 fragment = new HomeFragment();
+                break;
+            case 1:
+                fragment = new RecyclerListFragment();
+                break;
+            case 2:
+                fragment = new RecyclerGridFragment();
                 break;
             default:
                 throw new IllegalStateException("selectedMenuItemPosition too large");
