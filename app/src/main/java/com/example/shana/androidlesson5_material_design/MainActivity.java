@@ -66,7 +66,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateLayoutWithSelectedItemPosition(int newSelectedItemPosition) {
         changeMenuItemState(newSelectedItemPosition);
-        changeFragmentView(newSelectedItemPosition);
+        MenuItem menuItem = navigationView.getMenu().getItem(selectedMenuItemPosition);
+        changeFragmentView(menuItem);
+        getSupportActionBar().setTitle(menuItem.getTitle());
     }
 
     private int getSelectedMenuItemPosition(MenuItem selectedItem) {
@@ -86,20 +88,20 @@ public class MainActivity extends AppCompatActivity {
         navigationView.getMenu().getItem(selectedMenuItemPosition).setIcon(android.R.drawable.star_on);
     }
 
-    private void changeFragmentView(int selectedMenuItemPosition) {
+    private void changeFragmentView(MenuItem menuItem) {
         Fragment fragment;
-        switch (selectedMenuItemPosition) {
-            case 0:
+        switch (menuItem.getItemId()) {
+            case R.id.menu_drawer_home:
                 fragment = new HomeFragment();
                 break;
-            case 1:
+            case R.id.menu_drawer_recycler_list:
                 fragment = new RecyclerListFragment();
                 break;
-            case 2:
+            case R.id.menu_drawer_recycler_grid:
                 fragment = new RecyclerGridFragment();
                 break;
             default:
-                throw new IllegalStateException("selectedMenuItemPosition too large");
+                throw new IllegalStateException("Unknown menu item id");
         }
         getFragmentManager().beginTransaction().replace(R.id.activity_main_fragment_container, fragment, fragment.toString()).commit();
     }
