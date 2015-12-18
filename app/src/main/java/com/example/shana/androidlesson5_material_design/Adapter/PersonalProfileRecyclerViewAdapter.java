@@ -33,6 +33,10 @@ public class PersonalProfileRecyclerViewAdapter extends RecyclerView.Adapter {
         this.listener = listener;
     }
 
+    public void appendData(ArrayList<PersonalProfile> profileList) {
+        this.profileList.addAll(profileList);
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
@@ -72,6 +76,7 @@ public class PersonalProfileRecyclerViewAdapter extends RecyclerView.Adapter {
             super(itemView);
             ButterKnife.bind(this, itemView);
             this.listener = listener;
+
             itemView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
@@ -93,17 +98,18 @@ public class PersonalProfileRecyclerViewAdapter extends RecyclerView.Adapter {
         }
 
         private void showSelection() {
-            selectionAnimation(0, .5f);
+            selectionAnimation(.5f);
         }
 
         private void hideSelection() {
-            selectionAnimation(.5f, 0);
+            selectionAnimation(0);
         }
 
-        private void selectionAnimation(float begin, float end) {
-            selectedView.setAlpha(end);
-            selectedView.startAnimation(new AlphaAnimation(begin, end));
-
+        private void selectionAnimation(float end) {
+            selectedView.clearAnimation();
+            AlphaAnimation alphaAnimation = new AlphaAnimation(selectedView.getAlpha(), end);
+            alphaAnimation.setFillAfter(true);
+            selectedView.startAnimation(alphaAnimation);
         }
 
 

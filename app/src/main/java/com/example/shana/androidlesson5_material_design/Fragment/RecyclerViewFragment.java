@@ -36,6 +36,7 @@ public abstract class RecyclerViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recycler, container, false);
         ButterKnife.bind(this, view);
+        setupRecyclerView();
         loadData();
         return view;
     }
@@ -46,15 +47,8 @@ public abstract class RecyclerViewFragment extends Fragment {
             @Override
             public void onFinish(String result) {
                 progressDialog.dismiss();
-                ArrayList<PersonalProfile> list = new Gson().fromJson(result, new TypeToken<ArrayList<PersonalProfile>>(){}.getType());
-                recyclerView.setAdapter(new PersonalProfileRecyclerViewAdapter(list, getLayoutOrientation(), new PersonalProfileRecyclerViewAdapter.OnViewClickListener() {
-                    @Override
-                    public void onClickAt(int position) {
-                        Snackbar.make(getView(), "On " + position + " item click", Snackbar.LENGTH_SHORT).show();
-                    }
-                }));
-                recyclerView.getAdapter().notifyDataSetChanged();
-                recyclerView.setLayoutManager(getLayoutManager());
+                layoutRecyclerView((ArrayList<PersonalProfile>) new Gson().fromJson(result, new TypeToken<ArrayList<PersonalProfile>>() {
+                }.getType()));
             }
 
             @Override
@@ -64,6 +58,22 @@ public abstract class RecyclerViewFragment extends Fragment {
                 Assert.assertTrue(false);
             }
         }).download(new LocalDataRequest(getActivity(), "result_data"));
+    }
+
+    private void setupRecyclerView() {
+        recyclerView.setAdapter(new PersonalProfileRecyclerViewAdapter(new ArrayList<PersonalProfile>(), getLayoutOrientation(), new PersonalProfileRecyclerViewAdapter.OnViewClickListener() {
+            @Override
+            public void onClickAt(int position) {
+                Snackbar.make(getView(), "On " + position + " item click", Snackbar.LENGTH_SHORT).show();
+            }
+        }));
+        recyclerView.setLayoutManager(getLayoutManager());
+    }
+
+    private void layoutRecyclerView(ArrayList<PersonalProfile> personalProfileArray) {
+        PersonalProfileRecyclerViewAdapter adapter = (PersonalProfileRecyclerViewAdapter)recyclerView.getAdapter();
+        adapter.appendData(personalProfileArray);
+        adapter.notifyDataSetChanged();
     }
 
     protected abstract RecyclerView.LayoutManager getLayoutManager();
