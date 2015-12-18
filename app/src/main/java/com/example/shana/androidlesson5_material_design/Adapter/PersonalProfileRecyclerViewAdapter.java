@@ -7,6 +7,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -85,7 +87,8 @@ public class PersonalProfileRecyclerViewAdapter extends RecyclerView.Adapter {
                             showSelection();
                             break;
                         case MotionEvent.ACTION_CANCEL:
-                            hideSelection();
+                            selectedView.clearAnimation();
+                            selectedView.setVisibility(View.INVISIBLE);
                             break;
                         case MotionEvent.ACTION_UP:
                             hideSelection();
@@ -98,20 +101,33 @@ public class PersonalProfileRecyclerViewAdapter extends RecyclerView.Adapter {
         }
 
         private void showSelection() {
-            selectionAnimation(.5f);
+            selectionAnimation(0, .5f);
         }
 
         private void hideSelection() {
-            selectionAnimation(0);
+            selectionAnimation(.5f, 0);
         }
 
-        private void selectionAnimation(float end) {
+        private void selectionAnimation(float begin, float end) {
             selectedView.clearAnimation();
-            AlphaAnimation alphaAnimation = new AlphaAnimation(selectedView.getAlpha(), end);
-            alphaAnimation.setFillAfter(true);
-            selectedView.startAnimation(alphaAnimation);
+            selectedView.startAnimation(createAnimationSet(createAlphaAnimation(begin, end)));
         }
 
+        private AlphaAnimation createAlphaAnimation(float begin, float end) {
+            AlphaAnimation alphaAnimation = new AlphaAnimation(begin, end);
+            alphaAnimation.setStartOffset(200);
+            alphaAnimation.setDuration(200);
+            return alphaAnimation;
+        }
+
+        private AnimationSet createAnimationSet(Animation... animations) {
+            AnimationSet animationSet = new AnimationSet(true);
+            for (Animation animation : animations) {
+                animationSet.addAnimation(animation);
+            }
+            animationSet.setFillAfter(true);
+            return animationSet;
+        }
 
         public void layoutWithPersonalProfile(PersonalProfile personalProfile) {
             nameText.setText("Name: " + personalProfile.getName());
