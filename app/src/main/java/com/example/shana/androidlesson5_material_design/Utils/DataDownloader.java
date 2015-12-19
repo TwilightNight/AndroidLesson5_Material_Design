@@ -8,15 +8,15 @@ import com.google.common.base.Optional;
  * Created by shana on 2015/12/16.
  */
 
-public class DataDownloader {
+public class DataDownloader<T> {
     private OnDataDownloadFinishListener listener;
 
     public DataDownloader(OnDataDownloadFinishListener listener) {
         this.listener = listener;
     }
 
-    public interface OnDataDownloadFinishListener {
-        void onFinish(String result);
+    public interface OnDataDownloadFinishListener<T> {
+        void onFinish(T result);
 
         void onFailed(String errorMessage);
     }
@@ -25,14 +25,14 @@ public class DataDownloader {
         new DownLoadTask().execute(request);
     }
 
-    private class DownLoadTask extends AsyncTask<DataRequest, Void, Optional<String>> {
+    private class DownLoadTask extends AsyncTask<DataRequest<T>, Void, Optional<T>> {
         @Override
-        protected Optional<String> doInBackground(DataRequest... params) {
+        protected Optional<T> doInBackground(DataRequest... params) {
             return params[0].execute();
         }
 
         @Override
-        protected void onPostExecute(Optional<String> result) {
+        protected void onPostExecute(Optional<T> result) {
             if (result.isPresent()) {
                 try {
                     listener.onFinish(result.get());

@@ -15,7 +15,7 @@ import com.example.shana.androidlesson5_material_design.Adapter.PersonalProfileR
 import com.example.shana.androidlesson5_material_design.Model.PersonalProfile;
 import com.example.shana.androidlesson5_material_design.R;
 import com.example.shana.androidlesson5_material_design.Utils.DataDownloader;
-import com.example.shana.androidlesson5_material_design.Utils.LocalDataRequest;
+import com.example.shana.androidlesson5_material_design.Utils.UrlDataRequest;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 
@@ -66,7 +66,7 @@ public abstract class RecyclerViewFragment extends Fragment {
 
     private void loadData() {
         final ProgressDialog progressDialog = ProgressDialog.show(getActivity(), getResources().getString(R.string.progressing), getResources().getString(R.string.progressing_hint));
-        new DataDownloader(new DataDownloader.OnDataDownloadFinishListener() {
+        new DataDownloader(new DataDownloader.OnDataDownloadFinishListener<String>() {
             @Override
             public void onFinish(String result) {
                 progressDialog.dismiss();
@@ -80,7 +80,8 @@ public abstract class RecyclerViewFragment extends Fragment {
                 System.out.println(errorMessage);
                 Assert.assertTrue(false);
             }
-        }).download(new LocalDataRequest(getActivity(), "result_data"));
+        }).download(new UrlDataRequest("http://windows11:8888"));
+        //.download(new LocalDataRequest(getActivity(), "result_data"));
     }
 
     private void layoutRecyclerView(ArrayList<PersonalProfile> personalProfileArray) {

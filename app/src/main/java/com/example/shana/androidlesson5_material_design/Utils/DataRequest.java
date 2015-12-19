@@ -5,6 +5,6 @@ import com.google.common.base.Optional;
 /**
  * Created by shana on 2015/12/17.
  */
-public interface DataRequest {
-    Optional<String> execute();
+public interface DataRequest<T> {
+    Optional<T> execute();
 }

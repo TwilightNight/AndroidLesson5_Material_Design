@@ -20,7 +20,7 @@ public class LocalDataRequest implements DataRequest {
 
     @Override
     public Optional<String> execute() {
-        String data = convertStreamToString(getStreamAtLocation());
+        String data = StringConvert.readInputStream(getStreamAtLocation());
         if (data == null || data.length() == 0) {
             return Optional.absent();
         }
@@ -40,8 +40,4 @@ public class LocalDataRequest implements DataRequest {
         }
     }
 
-    private String convertStreamToString(InputStream inputStream) {
-        java.util.Scanner s = new java.util.Scanner(inputStream).useDelimiter("\\A");
-        return s.hasNext() ? s.next() : "";
-    }
 }

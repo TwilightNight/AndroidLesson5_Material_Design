@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.example.shana.androidlesson5_material_design.Model.PersonalProfile;
 import com.example.shana.androidlesson5_material_design.R;
+import com.example.shana.androidlesson5_material_design.Utils.ImageDownloadManager;
 
 import java.util.ArrayList;
 
@@ -133,7 +134,8 @@ public class PersonalProfileRecyclerViewAdapter extends RecyclerView.Adapter {
             nameText.setText("Name: " + personalProfile.getName());
             ageText.setText("Age: " + personalProfile.getAge());
             Context context = photoImageView.getContext();
-            photoImageView.setImageResource(context.getResources().getIdentifier(personalProfile.getPhoto(), "drawable", context.getPackageName()));
+            //photoImageView.setImageResource(context.getResources().getIdentifier(personalProfile.getPhoto(), "drawable", context.getPackageName()));
+            ImageDownloadManager.download(photoImageView, "http://Windows11:8888/img/" + personalProfile.getPhoto());
         }
     }
 }
