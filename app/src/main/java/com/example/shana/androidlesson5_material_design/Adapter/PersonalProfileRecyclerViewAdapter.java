@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.example.shana.androidlesson5_material_design.Model.PersonalProfile;
 import com.example.shana.androidlesson5_material_design.R;
-import com.example.shana.androidlesson5_material_design.Utils.ImageDownloadManager;
 
 import java.util.ArrayList;
 
@@ -27,13 +26,13 @@ import butterknife.ButterKnife;
  */
 public class PersonalProfileRecyclerViewAdapter extends RecyclerView.Adapter {
     private ArrayList<PersonalProfile> profileList;
-    private int orientation;
     private OnViewClickListener listener;
-
-    public PersonalProfileRecyclerViewAdapter(ArrayList<PersonalProfile> profileList, int orientation, OnViewClickListener listener) {
-        this.orientation = orientation;
+    LayoutDataSource layoutDataSource;
+    public PersonalProfileRecyclerViewAdapter(ArrayList<PersonalProfile> profileList,
+                                              OnViewClickListener listener, LayoutDataSource layoutDataSource) {
         this.profileList = profileList;
         this.listener = listener;
+        this.layoutDataSource = layoutDataSource;
     }
 
     public void appendData(ArrayList<PersonalProfile> profileList) {
@@ -44,9 +43,9 @@ public class PersonalProfileRecyclerViewAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         View contactView = LayoutInflater.from(context).inflate(R.layout.adapter_personal_profile, parent, false);
-        ViewHolder viewHolder = new ViewHolder(contactView, listener);
+        ViewHolder viewHolder = new ViewHolder(contactView, listener, layoutDataSource);
         LinearLayout linearLayout = (LinearLayout) contactView.findViewById(R.id.adapter_personal_profile_linear_layout);
-        linearLayout.setOrientation(orientation);
+        linearLayout.setOrientation(linearLayout.getOrientation());
         return viewHolder;
     }
 
@@ -64,8 +63,14 @@ public class PersonalProfileRecyclerViewAdapter extends RecyclerView.Adapter {
         void onClickAt(int position);
     }
 
+    public interface LayoutDataSource {
+        void onGetImageFile(ImageView imageView, String fileName);
+        int getLinearLayoutOrientation();
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
         OnViewClickListener listener;
+        LayoutDataSource layoutDataSource;
         @Bind(R.id.adapter_personal_data_name)
         TextView nameText;
         @Bind(R.id.adapter_personal_data_age)
@@ -75,11 +80,11 @@ public class PersonalProfileRecyclerViewAdapter extends RecyclerView.Adapter {
         @Bind(R.id.adapter_personal_profile_selected_view)
         View selectedView;
 
-        public ViewHolder(View itemView, final OnViewClickListener listener) {
+        public ViewHolder(View itemView, final OnViewClickListener listener, LayoutDataSource layoutDataSource) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             this.listener = listener;
-
+            this.layoutDataSource = layoutDataSource;
             itemView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
@@ -133,9 +138,7 @@ public class PersonalProfileRecyclerViewAdapter extends RecyclerView.Adapter {
         public void layoutWithPersonalProfile(PersonalProfile personalProfile) {
             nameText.setText("Name: " + personalProfile.getName());
             ageText.setText("Age: " + personalProfile.getAge());
-            Context context = photoImageView.getContext();
-            //photoImageView.setImageResource(context.getResources().getIdentifier(personalProfile.getPhoto(), "drawable", context.getPackageName()));
-            ImageDownloadManager.download(photoImageView, "http://Windows11:8888/img/" + personalProfile.getPhoto());
+            layoutDataSource.onGetImageFile(photoImageView, personalProfile.getPhoto());
         }
     }
 }

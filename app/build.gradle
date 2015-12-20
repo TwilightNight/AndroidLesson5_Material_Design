@@ -11,10 +11,8 @@ android {
         versionName "1.0"
     }
     buildTypes {
-        def LOAD_DATA_AT_LOCAL = "0"
-        def LOAD_DATA_AT_INTERNET = "1"
         debug{
-            buildConfigField "int" , "LOAD_DATA_METHOD" , LOAD_DATA_AT_LOCAL
+            buildConfigField "boolean" , "LOAD_DATA_FROM_INTERNET" , "false"
         }
         release {
             minifyEnabled false
