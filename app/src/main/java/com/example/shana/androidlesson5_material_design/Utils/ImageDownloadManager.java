@@ -3,6 +3,8 @@ package com.example.shana.androidlesson5_material_design.Utils;
 import android.graphics.Bitmap;
 import android.widget.ImageView;
 
+import com.google.common.base.Optional;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -15,7 +17,17 @@ import java.util.Set;
 public class ImageDownloadManager {
     private static HashMap<ImageView, String> imageMap = new HashMap();
     public static void download(ImageView imageView, String urlAddress) {
-        cancel(imageView);
+        imageView.setImageBitmap(null);
+        removeImage(imageView);
+        Optional<Bitmap> cacheImage = ImageCache.getInstance().get(urlAddress);
+        if (cacheImage.isPresent()) {
+            imageView.setImageBitmap(cacheImage.get());
+            return;
+        }
+        prepareDownload(imageView, urlAddress);
+    }
+
+    private static void prepareDownload(ImageView imageView, String urlAddress) {
         if (!imageMap.containsValue(urlAddress)){
             startDownload(imageView, urlAddress);
         }
@@ -28,20 +40,20 @@ public class ImageDownloadManager {
             public void onFinish(Bitmap result) {
                 for (ImageView imageView: getKeysByValue(imageMap, urlAddress)) {
                     imageView.setImageBitmap(result);
-                    cancel(imageView);
+                    removeImage(imageView);
                 }
             }
 
             @Override
             public void onFailed(String errorMessage) {
                 for (ImageView imageView: getKeysByValue(imageMap, urlAddress)) {
-                    cancel(imageView);
+                    removeImage(imageView);
                 }
             }
         }).download(new ImageDataRequest(urlAddress));
     }
 
-    public static void cancel(ImageView imageView) {
+    private static void removeImage(ImageView imageView) {
         imageMap.remove(imageView);
     }
 

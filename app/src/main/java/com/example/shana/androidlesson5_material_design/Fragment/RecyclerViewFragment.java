@@ -1,7 +1,6 @@
 package com.example.shana.androidlesson5_material_design.Fragment;
 
 import android.app.Fragment;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -16,10 +15,9 @@ import com.example.shana.androidlesson5_material_design.Model.PersonalProfile;
 import com.example.shana.androidlesson5_material_design.R;
 import com.example.shana.androidlesson5_material_design.Utils.DataDownloader;
 import com.example.shana.androidlesson5_material_design.Utils.UrlDataRequest;
+import com.example.shana.androidlesson5_material_design.Views.StatusViewHolder;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
-
-import junit.framework.Assert;
 
 import java.util.ArrayList;
 
@@ -30,6 +28,8 @@ import butterknife.ButterKnife;
  * Created by shana on 2015/12/17.
  */
 public abstract class RecyclerViewFragment extends Fragment {
+    @Bind(R.id.fragment_recycler_layout)
+    ViewGroup layout;
     @Bind(R.id.fragment_recycler_recycler_view)
     RecyclerView recyclerView;
     @Bind(R.id.fragment_recycler_floating_action_button)
@@ -65,26 +65,34 @@ public abstract class RecyclerViewFragment extends Fragment {
     }
 
     private void loadData() {
-        final ProgressDialog progressDialog = ProgressDialog.show(getActivity(), getResources().getString(R.string.progressing), getResources().getString(R.string.progressing_hint));
+        StatusViewHolder.addLoadingView(getActivity(), layout);
         new DataDownloader(new DataDownloader.OnDataDownloadFinishListener<String>() {
             @Override
             public void onFinish(String result) {
-                progressDialog.dismiss();
+                StatusViewHolder.removeAllStatusView(layout);
                 layoutRecyclerView((ArrayList<PersonalProfile>) new Gson().fromJson(result, new TypeToken<ArrayList<PersonalProfile>>() {
                 }.getType()));
             }
 
             @Override
             public void onFailed(String errorMessage) {
-                progressDialog.dismiss();
-                System.out.println(errorMessage);
-                Assert.assertTrue(false);
+                layoutErrorView();
             }
         }).download(new UrlDataRequest("http://windows11:8888"));
         //.download(new LocalDataRequest(getActivity(), "result_data"));
     }
 
+    private void layoutErrorView() {
+        StatusViewHolder.addRetryView(getActivity(), layout, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadData();
+            }
+        });
+    }
+
     private void layoutRecyclerView(ArrayList<PersonalProfile> personalProfileArray) {
+        StatusViewHolder.removeAllStatusView(layout);
         PersonalProfileRecyclerViewAdapter adapter = (PersonalProfileRecyclerViewAdapter)recyclerView.getAdapter();
         adapter.appendData(personalProfileArray);
         adapter.notifyDataSetChanged();
